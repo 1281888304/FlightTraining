@@ -1,62 +1,616 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:expandable_text/expandable_text.dart';
+
+
+/*
+ Home rount build Qinghang, Aaron, Arshdeep,
+ just a connect every page we did
+ */
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: Forms(),
-    ),
-  );
+  runApp(MaterialApp(
+    initialRoute: '/',
+    routes: {
+      '/': (context) => HomeRoute(),
+      '/viewStudent': (context) => ViewStudentRoute(),
+      '/schedule': (context) => ScheduleRoute(),
+      '/requirement': (context) => RequirementRoute(),
+      '/viewEndorsements': (context) => EndorsementsRoute(),
+      '/studentDetail': (context) => StudentDetailRoute(),
+      '/viewGrade': (context) => GradeRoute(),
+    },
+  ));
 }
 
-class Forms extends StatefulWidget {
+/*
+  The student detail page doing by Arshdeep and Qinghang together
+  use the expaand card to provide all the detail for lesson
+ */
+class StudentDetailRoute extends StatelessWidget{
   @override
-  Input createState() => Input();
-}
-
-class Input extends State<Forms> {
-  double _sliderval = 0;
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Center(child: Text('Lessons')),
+      appBar: AppBar(
+        title: Text('Detail for Aaron'),
+        centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),
-      body: new SafeArea(
-        child: new Form(
-          child: new ListView(children: <Widget>[
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Lesson #: '),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 45.0),
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 20.0,),
+            ExpansionTile(
+                title: Text(
+                  'Lesson1',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              children: <Widget>[
+                ExpansionTile(
+                  title: Text('Lesson'
+                  ),
+                  // children: <Widget>[
+                  //   ListView( children: <Widget>[
+                  //     Text('Lesson'),
+                  //     Text('Requirement'),
+                  //   ],
+                  //   )
+                  // ],
+                  children: <Widget>[
+                    Text('Lesson')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Data'),
+                  children: <Widget>[
+                    Text('15/11/2020')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Instructor'),
+                  children: <Widget>[
+                    Text('Amy')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Total Flight time'),
+                  children: <Widget>[
+                    Text('2 hours')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Tasks'),
+                  children: <Widget>[
+                    Text('1/5')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Grade average'),
+                  children: <Widget>[
+                    Text('N/A')
+                  ],
+                )
+
+              ],
+
+
             ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Instructor : '),
+
+
+            ExpansionTile(
+              title: Text(
+                'Lesson1',
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              children: <Widget>[
+                ExpansionTile(
+                  title: Text('Lesson'
+                  ),
+                  // children: <Widget>[
+                  //   ListView( children: <Widget>[
+                  //     Text('Lesson'),
+                  //     Text('Requirement'),
+                  //   ],
+                  //   )
+                  // ],
+                  children: <Widget>[
+                    Text('Lesson')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Data'),
+                  children: <Widget>[
+                    Text('15/11/2020')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Instructor'),
+                  children: <Widget>[
+                    Text('Amy')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Total Flight time'),
+                  children: <Widget>[
+                    Text('2 hours')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Tasks'),
+                  children: <Widget>[
+                    Text('1/5')
+                  ],
+                ),
+                ExpansionTile(title:  Text('Grade average'),
+                  children: <Widget>[
+                    Text('N/A')
+                  ],
+                )
+
+              ],
+
+
             ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Student Name : '),
-            ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Aircraft Type : '),
-            ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Aircraft Identification : '),
-            ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Route Name : '),
-            ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Flight Time : '),
-            ),
-            new TextFormField(
-              decoration: InputDecoration(labelText: 'Ground Time : '),
-            ),
-            new Container(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: new RaisedButton(
-                  child: const Text('Create Lesson'),
-                  onPressed: () {},
-                )),
-          ]),
-        ),
+          ],
+
+
+
+        )
       ),
     );
+  }
+
+}
+
+
+/*
+  Home page done by Qinghang,
+  use sever buttom to link to different page ,
+  also use main rount connect them
+ */
+class HomeRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Skynotes'),
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: Center(
+          child: Column(
+            children: <Widget>[
+              RaisedButton(
+                child: Text('View student for lesson!'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/viewStudent');
+                },
+              ),
+              RaisedButton(
+                child: Text('Schedule a Lesson!'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/schedule');
+                },
+              ),
+              RaisedButton(
+                child: Text('View Requirements!'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/requirement');
+                },
+              ),
+              RaisedButton(
+                child: Text('View Grade for students!'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/viewGrade');
+                },
+              ),
+              RaisedButton(
+                child: Text('View Endorsements for students!'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/viewEndorsements');
+                },
+              ),
+            ],
+          )),
+    );
+  }
+}
+
+
+/*
+  Student detail build by Qinghang,
+   view the student detail and connect to the
+  detail pages
+ */
+class ViewStudentRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("View Student"),
+        centerTitle: true,
+        backgroundColor: Colors.green,
+      ),
+      body: ListView(
+        children: <Widget>[
+          DataTable(columns: [
+            DataColumn(label: Text('Student Number')),
+            DataColumn(label: Text('Students')),
+            DataColumn(label: Text('Lesson Detail')),
+
+
+          ],
+              rows: [
+                DataRow(cells: [
+                  DataCell(Text('1')),
+                  DataCell(Text('Aaron')),
+                  DataCell(RaisedButton(
+                    child: Text('View'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/studentDetail');
+                    },
+                  ),),
+
+                ]),
+
+                DataRow(cells: [
+                  DataCell(Text('2')),
+                  DataCell(Text('Austin')),
+                  DataCell(Text('view')),
+
+                ]),
+
+                DataRow(cells: [
+                  DataCell(Text('3')),
+                  DataCell(Text('Arshdeep')),
+                  DataCell(Text('view')),
+
+                ]),
+              ])
+        ],
+
+      ),
+    );
+  }
+}
+
+/*
+ Request page done by Aaron
+ use a Form for valudate the empty
+ and use the submit buttom summary the inform to the lesson page
+ */
+class ScheduleRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Schedule a Lesson"),
+        centerTitle: true,
+        backgroundColor: Colors.green,
+      ),
+      body: ScheduleLesson(),
+    );
+  }
+}
+
+//lesson part provide by Aaron for help method
+class ScheduleLesson extends StatefulWidget {
+  @override
+  CreateLForm createState() {
+    return CreateLForm();
+  }
+}
+
+// Define a corresponding State class.
+// This class holds data related to the form.
+class CreateLForm extends State<ScheduleLesson> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  //
+  // Note: This is a `GlobalKey<FormState>`,
+  // not a GlobalKey<MyCustomFormState>.
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey created above.
+    return Form(
+        key: _formKey,
+        child: ListView(children: <Widget>[
+          // The validator receives the text that the user has entered.
+          TextFormField(
+            decoration: InputDecoration(labelText: 'Date/Time : '),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter a date';
+              }
+              return null;
+            },
+          ),
+          new TextFormField(
+            decoration: InputDecoration(labelText: 'Students/Pilets : '),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+
+          ),
+          new TextFormField(
+            maxLines: 5,
+            decoration: InputDecoration(labelText: "Note:"),
+          ),
+
+          ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState.validate()) {}
+              },
+              child: Text('Submit'))
+        ]));
+  }
+}
+
+/*
+  done by Qinghang
+  a table use function to show the requirement
+ */
+class RequirementRoute extends StatelessWidget {
+
+    double iconSize = 40.5;
+
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text("Requirement",
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.green,
+          ),
+        body:  SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+
+                //old expand method
+
+                child: ExpandableText(
+                  'In order to apply for a Private Pilot certificate there are requirements that must be met according to FAR Part 61. The requirements are categorized in Part 61 as student and private. Our site allows users to view all requirements for their training program according to FAR Part 61 and track the completion of those requirements. Simply select the student and choose the type of requirement. Expand the chosen requirement to view, click completed and update.',
+                  trimLines: 1,
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Table(
+                  border: TableBorder.all(),
+                  columnWidths: {0: FractionColumnWidth(.6), 1: FractionColumnWidth(.2), 2: FractionColumnWidth(.2)},
+                  children: [
+                    TableRow( children: [
+                      Column(children:[
+                        Icon(Icons.add_location, size: iconSize,
+                        color: Colors.blueGrey,),
+                        Text('Requirement')
+                      ]),
+                      Column(children:[
+                        Icon(Icons.lightbulb_outline, size: iconSize,color: Colors.lightBlueAccent,),
+                        Text('Status')
+                      ]),
+                      Column(children:[
+                        Icon(Icons.access_time_rounded, size: iconSize,color: Colors.deepPurpleAccent,),
+                        Text('Completed')
+                      ]),
+                    ]),
+                    TableRow( children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+
+                        //old expand method
+
+                        child: ExpandableText(
+                          '4.3.1.1 A person who has not held a medical certificate at any point after July 15, 2006 must obtain a medical certificate issued under part 67. The person may choose to use BasicMed even while holding an unexpired medical certificate. After that medical certificate expires, that pilot may use or continue to use BasicMed, provided that person meets the other conditions and limitations.',
+                          trimLines: 3,
+                        ),
+                      ),
+                      Icon(Icons.check_circle, size: iconSize,color: Colors.green),
+                      Text('  22/12/2020', textScaleFactor:1.0,textAlign: TextAlign.center,),
+                    ]),
+                    TableRow( children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+
+                        //old expand method
+
+                        child: ExpandableText(
+                          '4.3.1.1 A person who has not held a medical certificate at any point after July 15, 2006 must obtain a medical certificate issued under part 67. The person may choose to use BasicMed even while holding an unexpired medical certificate. After that medical certificate expires, that pilot may use or continue to use BasicMed, provided that person meets the other conditions and limitations.',
+                          trimLines: 3,
+                        ),
+                      ),
+                      Icon(Icons.adjust, size: iconSize,color: Colors.red),
+                      Text('  11/12/2020', textScaleFactor:1.0,textAlign: TextAlign.center,),
+                    ]),
+                  ],
+                ),
+              ),
+
+
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
+/*
+  done by Qinghang
+  a data table shows the endorsement
+ */
+class EndorsementsRoute extends StatelessWidget{
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+        title: Text("Endorsements",
+    ),
+    centerTitle: true,
+    backgroundColor: Colors.green,
+    ),
+    body: ListView(
+      children: <Widget>[
+        DataTable(columns: [
+          DataColumn(label: Text('Endorsements')),
+          DataColumn(label: Text('Status')),
+          DataColumn(label: Text('Complete Date')),
+        ], rows: [
+          DataRow(cells: [
+            DataCell(Text('Solo cross-country flight: § 61.93(c)(1) and 61.93(c)(2) - ')),
+            DataCell(Icon(Icons.check_circle, size: 20.5,color: Colors.green),),
+            DataCell(Text('11/12/2020')),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Pre-solo aeronautical knowledge: § ')),
+            DataCell(Icon(Icons.adjust, size: 20.5,color: Colors.red),),
+            DataCell(Text('N/A')),
+          ]),
+        ])
+      ],
+    ),
+    );
+  }
+
+}
+
+
+//Arshdeep's grade class
+//view grade route
+class GradeRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Back"),
+        backgroundColor: Colors.green,
+      ),
+
+      body: ListView(
+        children: <Widget>[
+          DataTable(columns: [
+            DataColumn(label: Text('Assignemnts')),
+            DataColumn(label: Text('Grades')),
+
+
+          ],
+              rows: [
+                DataRow(cells: [
+                  DataCell(Text('Air worksheet')),
+                  DataCell(Text('N/a')),
+
+                ]),
+
+                DataRow(cells: [
+                  DataCell(Text('Logs ')),
+                  DataCell(Text('N/a')),
+
+                ]),
+              ])
+        ],
+
+      ),
+    );
+
+  }
+}
+
+/*
+  there are all the function for readmore factor
+  by Qinghang
+ */
+class ExpandableText extends StatefulWidget {
+  const ExpandableText(
+      this.text, {
+        Key key,
+        this.trimLines = 1,
+      })  : assert(text != null),
+        super(key: key);
+
+  final String text;
+  final int trimLines;
+
+  @override
+  ExpandableTextState createState() => ExpandableTextState();
+}
+
+class ExpandableTextState extends State<ExpandableText> {
+  bool _readMore = true;
+  void _onTapLink() {
+    setState(() => _readMore = !_readMore);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
+    final colorClickableText = Colors.blue;
+    final widgetColor = Colors.black;
+    TextSpan link = TextSpan(
+        text: _readMore ? "... read more" : " read less",
+        style: TextStyle(
+          color: colorClickableText,
+        ),
+        recognizer: TapGestureRecognizer()..onTap = _onTapLink
+    );
+    Widget result = LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        assert(constraints.hasBoundedWidth);
+        final double maxWidth = constraints.maxWidth;
+        // Create a TextSpan with data
+        final text = TextSpan(
+          text: widget.text,
+        );
+        // Layout and measure link
+        TextPainter textPainter = TextPainter(
+          text: link,
+          textDirection: TextDirection.rtl,//better to pass this from master widget if ltr and rtl both supported
+          maxLines: widget.trimLines,
+          ellipsis: '...',
+        );
+        textPainter.layout(minWidth: constraints.minWidth, maxWidth: maxWidth);
+        final linkSize = textPainter.size;
+        // Layout and measure text
+        textPainter.text = text;
+        textPainter.layout(minWidth: constraints.minWidth, maxWidth: maxWidth);
+        final textSize = textPainter.size;
+        // Get the endIndex of data
+        int endIndex;
+        final pos = textPainter.getPositionForOffset(Offset(
+          textSize.width - linkSize.width,
+          textSize.height,
+        ));
+        endIndex = textPainter.getOffsetBefore(pos.offset);
+        var textSpan;
+        if (textPainter.didExceedMaxLines) {
+          textSpan = TextSpan(
+            text: _readMore
+                ? widget.text.substring(0, endIndex)
+                : widget.text,
+            style: TextStyle(
+              color: widgetColor,
+            ),
+            children: <TextSpan>[link],
+          );
+        } else {
+          textSpan = TextSpan(
+            text: widget.text,
+          );
+        }
+        return RichText(
+          softWrap: true,
+          overflow: TextOverflow.clip,
+          text: textSpan,
+        );
+      },
+    );
+    return result;
   }
 }
