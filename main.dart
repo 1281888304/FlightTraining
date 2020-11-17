@@ -2,7 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:expandable_text/expandable_text.dart';
-
+import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 /*
  Home rount build Qinghang, Aaron, Arshdeep,
@@ -37,7 +39,8 @@ class StudentDetailRoute extends StatelessWidget{
         centerTitle: true,
         backgroundColor: Colors.blueGrey,
       ),
-      body: Padding(
+      resizeToAvoidBottomPadding: false,
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 45.0),
         child: Column(
           children: <Widget>[
@@ -99,15 +102,16 @@ class StudentDetailRoute extends StatelessWidget{
 
             ExpansionTile(
               title: Text(
-                'Lesson1',
+                'Lesson #2',
                 style: TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 25.0,
                     fontWeight: FontWeight.bold
                 ),
               ),
               children: <Widget>[
                 ExpansionTile(
-                  title: Text('Lesson'
+                  title: Text('class detail',
+                      style: TextStyle(fontSize: 23.0),
                   ),
                   // children: <Widget>[
                   //   ListView( children: <Widget>[
@@ -117,30 +121,121 @@ class StudentDetailRoute extends StatelessWidget{
                   //   )
                   // ],
                   children: <Widget>[
-                    Text('Lesson')
+                    ExpansionTile(title:  Text('Data'),
+                      children: <Widget>[
+                        Text('15/11/2020',style: TextStyle(fontSize: 14.0),)
+                      ],
+                    ),
+                    ExpansionTile(title:  Text('Instructor',style: TextStyle(fontSize: 14.0),),
+                      children: <Widget>[
+                        Text('Amy')
+                      ],
+                    ),
+                    ExpansionTile(title:  Text('Aircraft Type',style: TextStyle(fontSize: 14.0),),
+                      children: <Widget>[
+                        Text('CE-172')
+                      ],
+                    ),
+                    ExpansionTile(title:  Text('Aircraft Identification:',style: TextStyle(fontSize: 14.0),),
+                      children: <Widget>[
+                        Text('N5480E')
+                      ],
+                    ),
+                    ExpansionTile(title:  Text('Rounte name',style: TextStyle(fontSize: 14.0),),
+                      children: <Widget>[
+                        Text('50')
+                      ],
+                    )
                   ],
                 ),
-                ExpansionTile(title:  Text('Data'),
+                ExpansionTile(title:  Text('Areas of Operation',style: TextStyle(fontSize: 23.0),),
                   children: <Widget>[
-                    Text('15/11/2020')
+                    ExpansionTile(title:  Text('Stage I: Pre-SOLO AND SOLO'),
+                      children: <Widget>[
+                        ExpansionTile(title:  Text('Preflight Preparation'),
+                          children: <Widget>[
+                            Text('50')
+                          ],
+                        ),
+                        ExpansionTile(title:  Text('Basic and Performance Maneuvers'),
+                          children: <Widget>[
+                            Text('null')
+                          ],
+                        ),
+                        ExpansionTile(title:  Text('Preflight Procedures'),
+                          children: <Widget>[
+                            Text('null')
+                          ],
+                        )
+
+                      ],
+                    ),
+
                   ],
                 ),
-                ExpansionTile(title:  Text('Instructor'),
+                ExpansionTile(title:  Text('Flight Time',style: TextStyle(fontSize: 23.0),),
                   children: <Widget>[
-                    Text('Amy')
+                     Text('Dual Flight Time'),
+                     Text('\n'),
+
+                    DataTable(
+                      columns: [
+                        DataColumn(label: Text('Type')),
+                        DataColumn(label: Text('detail')),
+
+                      ],
+                      rows: [
+                        DataRow(cells: [
+                          DataCell(Text("Date")),
+                          DataCell(Text('10/13/2020')),
+
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Night Flight Time')),
+                          DataCell(Text('1.3')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Total Flight Time')),
+                          DataCell(Text('1.3')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Cross Country Flight Time')),
+                          DataCell(Text('1.3')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Instrument(Actual)')),
+                          DataCell(Text('1.3')),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text('Instrument(Simulated)')),
+                          DataCell(Text('1.3')),
+                        ]),
+
+                      ],
+                    ),
+
+
                   ],
                 ),
-                ExpansionTile(title:  Text('Total Flight time'),
+                ExpansionTile(title:  Text('Ground Time',style: TextStyle(fontSize: 23.0),),
                   children: <Widget>[
-                    Text('2 hours')
+                    Text('1.0')
                   ],
                 ),
-                ExpansionTile(title:  Text('Tasks'),
+                ExpansionTile(title:  Text('Lesson Notes',style: TextStyle(fontSize: 23.0),),
                   children: <Widget>[
-                    Text('1/5')
+                    ExpandableText('We will plan on discussing pilot qualifications, airworthiness requirements, preflight of the aircraft, checklist use and cockpit management. We will be doing a thorough preflight of the aircraft that you will be flying throughout your training and using the aircraft checklist! You will do a preflight for every flight lesson and using the aircraft checklists so this ground lesson will help you feel more comfortable with the aircraft, what and why you checking those items and how to check those items! \n'
+                        ,trimLines: 3,),
+                    Text('\n We will be discussing and performing a preflight check of the aircraft and reviewing the aircraft checklist.')
+                    ,
+                    InkWell(
+                      child: new Text('\n Chapter 6: Ground Reference Maneuvers ',style: TextStyle(color: Colors.blueAccent),),
+                            onTap: ()=>launch('https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/airplane_handbook/media/05_afh_ch3.pdf'),
+                    )
+                    
                   ],
                 ),
-                ExpansionTile(title:  Text('Grade average'),
+                ExpansionTile(title:  Text('Resources',style: TextStyle(fontSize: 23.0),),
                   children: <Widget>[
                     Text('N/A')
                   ],
@@ -309,6 +404,19 @@ class CreateLForm extends State<ScheduleLesson> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -316,14 +424,27 @@ class CreateLForm extends State<ScheduleLesson> {
         key: _formKey,
         child: ListView(children: <Widget>[
           // The validator receives the text that the user has entered.
-          TextFormField(
-            decoration: InputDecoration(labelText: 'Date/Time : '),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter a date';
-              }
-              return null;
-            },
+          // TextFormField(
+          //   decoration: InputDecoration(labelText: 'Date/Time : '),
+          //   validator: (value) {
+          //     if (value.isEmpty) {
+          //       return 'Please enter a date';
+          //     }
+          //     return null;
+          //   },
+          // ),
+          Text("${selectedDate.toLocal()}".split(' ')[0],
+            textAlign: TextAlign.center, style: TextStyle(
+              fontSize: 20.0
+            ),),
+          SizedBox(height: 20.0, width: 10.0,),
+          RaisedButton(
+            child:
+            Text('Select date'),
+            // Icon(Icons.date_range,color: Colors.green,),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16.0))),
+            onPressed: () => _selectDate(context),
           ),
           new TextFormField(
             decoration: InputDecoration(labelText: 'Students/Pilets : '),
@@ -459,6 +580,11 @@ class EndorsementsRoute extends StatelessWidget{
     ),
     body: ListView(
       children: <Widget>[
+        ExpandableText(
+          'Endorsements are an important part of a student’s flight training program. Our site includes all FAA endorsements that are necessary for student and private pilots in your Private Pilot ASEL certification program. Instructors are responsible for giving and managing their students’ endorsements. Simply choose a student and type of endorsement. Then expand the endorsement to enter the information for the student.',
+          trimLines: 3,
+        ),
+        Text('\n'),
         DataTable(columns: [
           DataColumn(label: Text('Endorsements')),
           DataColumn(label: Text('Status')),
@@ -490,7 +616,9 @@ class GradeRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Back"),
+        title: Text("Grade"),
+        centerTitle: true,
+
         backgroundColor: Colors.green,
       ),
 
