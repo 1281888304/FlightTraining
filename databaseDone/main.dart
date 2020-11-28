@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:expandable_text/expandable_text.dart';
+import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +14,7 @@ void main() {
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
-      '/': (context) => HomeRoute(),
+      '/': (context) => MyHomePage(),
       '/viewInstructor': (context) => ViewInstructorRoute(),
       '/viewStudent': (context) => ViewStudentRoute(),
       '/schedule': (context) => ScheduleRoute(),
@@ -25,50 +27,137 @@ void main() {
   ));
 }
 
-//home pages with some button to view different
-class HomeRoute extends StatelessWidget {
+//login and logout
+String username='';
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  TextEditingController user=new TextEditingController();
+  TextEditingController pass=new TextEditingController();
+
+  String msg='';
+
+  Future<List> _login() async {
+    final response = await http.post("https://qzhang.greenriverdev.com/305/flutterLoginTest/login.php", body: {
+      "username": user.text,
+      "password": pass.text,
+    });
+
+    var datauser = json.decode(response.body);
+
+    if(datauser.length==0){
+      setState(() {
+        msg="Login Fail";
+      });
+    }else{
+      if(datauser[0]['level']=='admin'){
+        Navigator.pushReplacementNamed(context, '/viewInstructor');
+      }else if(datauser[0]['level']=='member'){
+        Navigator.pushReplacementNamed(context, '/viewStudent');
+      }
+
+      setState(() {
+        username= datauser[0]['username'];
+      });
+
+    }
+
+    return datauser;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Skynotes'),
-        leading: new IconButton(
-          icon: new Icon(Icons.list),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ViewInstructorRoute()),
-            );
-          },
-        ),
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: Center(
+      appBar: AppBar(title: Text("Login"),),
+      body: Container(
+        child: Center(
           child: Column(
-        children: <Widget>[
-          RaisedButton(
-            child: Text(
-              'Instructor',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/viewInstructor');
-            },
+            children: <Widget>[
+              Text("Username",style: TextStyle(fontSize: 18.0),),
+              TextField(
+                controller: user,
+                decoration: InputDecoration(
+                    hintText: 'Username'
+                ),
+              ),
+              Text("Password",style: TextStyle(fontSize: 18.0),),
+              TextField(
+                controller: pass,
+                obscureText: true,
+                decoration: InputDecoration(
+                    hintText: 'Password'
+                ),
+              ),
+
+              RaisedButton(
+                child: Text("Login"),
+                onPressed: (){
+                  _login();
+                },
+              ),
+
+              Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),)
+
+
+            ],
           ),
-          RaisedButton(
-            child: Text(
-              'Student',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/viewStudent');
-            },
-          ),
-        ],
-      )),
+        ),
+      ),
     );
   }
 }
+
+
+
+//home pages with some button to view different
+// class HomeRoute extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Skynotes'),
+//         leading: new IconButton(
+//           icon: new Icon(Icons.list),
+//           onPressed: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => ViewInstructorRoute()),
+//             );
+//           },
+//         ),
+//         backgroundColor: Colors.blueGrey,
+//       ),
+//       body: Center(
+//           child: Column(
+//         children: <Widget>[
+//           RaisedButton(
+//             child: Text(
+//               'Instructor',
+//               style: Theme.of(context).textTheme.headline6,
+//             ),
+//             onPressed: () {
+//               Navigator.pushNamed(context, '/viewInstructor');
+//             },
+//           ),
+//           RaisedButton(
+//             child: Text(
+//               'Student',
+//               style: Theme.of(context).textTheme.headline6,
+//             ),
+//             onPressed: () {
+//               Navigator.pushNamed(context, '/viewStudent');
+//             },
+//           ),
+//         ],
+//       )),
+//     );
+//   }
+// }
 
 class ScheduleRoute extends StatelessWidget {
   @override
@@ -351,9 +440,9 @@ class ViewStudentDetailRoute extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           DataTable(columns: [
-            DataColumn(label: Text('Student Number')),
+            DataColumn(label: Text('SID')),
             DataColumn(label: Text('Students')),
-            DataColumn(label: Text('Lesson Detail')),
+            DataColumn(label: Text(' Detail')),
           ], rows: [
             DataRow(cells: [
               DataCell(Text('1')),
@@ -659,7 +748,7 @@ class ViewInstructorRoute extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomeRoute()),
+              MaterialPageRoute(builder: (context) => MyHomePage()),
             );
           },
         ),
@@ -698,6 +787,15 @@ class ViewStudentRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Student Page'),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyHomePage()),
+            );
+          },
+        ),
         backgroundColor: Colors.green,
       ),
       body: Center(
