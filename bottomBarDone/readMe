@@ -1,1 +1,10 @@
-Comment here
+Comment here:
+
+I comment the studentRoute and put it into another dart file call studentRoute.dart, you should be fine after check my code, 
+
+just make sure that on final<List> _children, if you have more 3 BottomNavigationBarItem, make sure your _children have 3 link class.
+
+And for your page, you need to create an instructor home pages, for "home", and one for create lesson one for view students.
+
+
+
