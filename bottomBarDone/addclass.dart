@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'InstructorNavPage.dart';
 void main() => runApp(CreateLesson());
 
 class CreateLesson extends StatelessWidget {

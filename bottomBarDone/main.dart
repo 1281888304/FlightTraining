@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'home.dart';
 import 'addclass.dart';
 import 'studentRoute.dart';
+import 'InstructorNavPage.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -793,49 +794,49 @@ class GradeRoute extends StatelessWidget {
   }
 }
 
-class ViewInstructorRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Instructor Page'),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MyHomePage()),
-            );
-          },
-        ),
-        backgroundColor: Colors.green,
-      ),
-      body: Center(
-          child: Column(children: <Widget>[
-        RaisedButton(
-          child: Text(
-            'Create a Lesson',
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          onPressed: ()=>Navigator.of(context).push(
-            new MaterialPageRoute(
-              builder:(BuildContext context)=> new CreateLesson(),
-            )
-        ),
-        ),
-        RaisedButton(
-          child: Text(
-            'View student for lesson!',
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, '/viewStudentDetail');
-          },
-        ),
-      ])),
-    );
-  }
-}
+// class ViewInstructorRoute extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Instructor Page'),
+//         leading: new IconButton(
+//           icon: new Icon(Icons.arrow_back),
+//           onPressed: () {
+//             Navigator.push(
+//               context,
+//               MaterialPageRoute(builder: (context) => MyHomePage()),
+//             );
+//           },
+//         ),
+//         backgroundColor: Colors.green,
+//       ),
+//       body: Center(
+//           child: Column(children: <Widget>[
+//         RaisedButton(
+//           child: Text(
+//             'Create a Lesson',
+//             style: Theme.of(context).textTheme.headline6,
+//           ),
+//           onPressed: ()=>Navigator.of(context).push(
+//             new MaterialPageRoute(
+//               builder:(BuildContext context)=> new CreateLesson(),
+//             )
+//         ),
+//         ),
+//         RaisedButton(
+//           child: Text(
+//             'View student for lesson!',
+//             style: Theme.of(context).textTheme.headline6,
+//           ),
+//           onPressed: () {
+//             Navigator.pushNamed(context, '/viewStudentDetail');
+//           },
+//         ),
+//       ])),
+//     );
+//   }
+// }
 
 // class ViewStudentRoute extends StatelessWidget {
 //   // @override
